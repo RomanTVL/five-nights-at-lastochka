@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>5 Ночей в Ласточке</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@0;1&family=Share+Tech+Mono&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0;user-select:none;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;background:#000;overflow:hidden;cursor:grab;font-family:'Share Tech Mono',monospace;}
+  body.grabbing{cursor:grabbing;}
+  #c{position:fixed;inset:0;display:block;}
+  #vig{position:fixed;inset:0;pointer-events:none;z-index:2;box-shadow:inset 0 0 240px 90px rgba(0,0,0,0.96);}
+  #grain{position:fixed;inset:0;pointer-events:none;z-index:3;opacity:0.07;mix-blend-mode:overlay;
+    background-image:repeating-radial-gradient(circle at 20% 30%, rgba(255,255,255,0.5) 0 1px, transparent 1px 3px),
+      repeating-radial-gradient(circle at 70% 60%, rgba(255,255,255,0.4) 0 1px, transparent 1px 4px);animation:g 0.5s steps(2) infinite;}
+  @keyframes g{0%{transform:translate(0,0)}50%{transform:translate(-2px,1px)}100%{transform:translate(1px,-1px)}}
+  #bedred{position:fixed;inset:0;pointer-events:none;z-index:4;opacity:0;transition:opacity .2s;
+    background:linear-gradient(to right,rgba(150,0,0,0.9),transparent 22%),linear-gradient(to left,rgba(150,0,0,0.9),transparent 22%),linear-gradient(to bottom,transparent 55%,rgba(150,0,0,0.9));}
+  #clock{position:fixed;top:14px;right:18px;z-index:6;color:#c9c3b2;font-size:24px;letter-spacing:0.08em;text-shadow:0 0 12px rgba(0,0,0,0.9);
+    background:rgba(5,6,10,0.45);border:1px solid rgba(200,195,178,0.12);border-radius:8px;padding:6px 14px;backdrop-filter:blur(2px);}
+  #clock small{font-size:12px;color:#7a8;letter-spacing:0.2em;}
+  #cue{position:fixed;top:44%;left:0;right:0;text-align:center;z-index:6;pointer-events:none;font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(220,210,200,0);font-size:26px;letter-spacing:0.12em;transition:color .25s ease;}
+  #hint{position:fixed;bottom:20px;left:0;right:0;text-align:center;z-index:6;pointer-events:none;font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(160,160,175,0.45);font-size:14px;transition:opacity 1s;}
+  #scare{position:fixed;inset:0;z-index:20;display:none;background:#000;}
+  #scare canvas{position:absolute;inset:0;width:100%;height:100%;}
+  #flash{position:fixed;inset:0;z-index:21;background:#fff;opacity:0;pointer-events:none;}
+  #win{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;flex-direction:column;gap:18px;}
+  #win canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1;}
+  #win h1{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,9vw,80px);color:#fff;text-shadow:0 2px 30px rgba(0,0,0,0.6);}
+  #win p{color:#eee;font-size:15px;letter-spacing:0.1em;}
+  #win button,#startBtn{font-family:'Share Tech Mono';font-size:15px;letter-spacing:0.2em;padding:14px 40px;border:1px solid rgba(255,255,255,0.6);background:rgba(0,0,0,0.3);color:#fff;cursor:pointer;transition:.3s;}
+  #win button:hover,#startBtn:hover{background:rgba(255,255,255,0.15);letter-spacing:0.3em;}
+  #start{position:fixed;inset:0;z-index:40;display:flex;background:#000;background-image:radial-gradient(circle at 72% 45%,rgba(36,22,24,0.95),#000 72%);overflow:hidden;}
+  #menuL{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center;gap:20px;padding:0 5vw;max-width:min(460px,68vw);text-align:left;}
+  #menuFace{position:absolute;right:-4%;top:0;height:100%;width:62%;z-index:1;pointer-events:auto;cursor:default;}
+  #menuL h1{text-align:left;}
+  .mi{opacity:0;animation:menuIn .9s ease forwards;}
+  .mi:nth-child(1){animation-delay:.15s}.mi:nth-child(2){animation-delay:.45s}.mi:nth-child(3){animation-delay:.65s}.mi:nth-child(4){animation-delay:.9s}.mi:nth-child(5){animation-delay:1.15s}
+  @keyframes menuIn{from{opacity:0;transform:translateX(-26px);}to{opacity:1;transform:none;}}
+  #startBtn,#openSettings{width:fit-content;}
+  #startBtn,#openSettings{font-size:19px !important;padding:18px 52px !important;letter-spacing:0.28em !important;}
+  #startBtn:hover,#openSettings:hover{border-color:#c94444 !important;color:#fff !important;box-shadow:0 0 28px rgba(201,68,68,0.4);}
+  #menuSub{font-family:'Cormorant Garamond',serif;font-style:italic;color:#6a655a;font-size:16px;letter-spacing:0.22em;margin-top:-8px;}
+  #menuVer{position:absolute;left:16px;bottom:12px;font-size:10px;color:#3a3f48;letter-spacing:0.15em;z-index:3;}
+  #devPanel button{font-family:'Share Tech Mono';font-size:10px;background:#0f1420;color:#9ab;border:1px solid #2a3550;border-radius:6px;padding:4px 8px;cursor:pointer;}
+  #devPanel button:hover{border-color:#c94444;color:#fff;}
+  .tBlood{color:#8b0e0e;text-shadow:0 2px 0 #5a0808,0 5px 10px rgba(160,16,16,0.55),0 0 26px rgba(180,20,20,0.4);}
+  .tGlitch{color:#c9c3b2;font-style:italic;letter-spacing:0.04em;animation:flickT 4s infinite;}
+  @keyframes flickT{0%,90%{opacity:1}91%{opacity:.35}92%{opacity:1}95%{opacity:.5}96%{opacity:1}}
+  #start h1{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,4.6vw,52px);color:#c9c3b2;letter-spacing:0.18em;white-space:nowrap;}
+  #start .r{max-width:44ch;text-align:center;color:#8a8f96;font-size:13px;line-height:2;letter-spacing:0.04em;padding:0 16px;}
+  #start .r b{color:#c9c3b2;}
+  #nightCard{position:fixed;inset:0;z-index:60;background:#000;display:none;align-items:center;justify-content:center;}
+  #nightCard div{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,9vw,86px);color:#c9c3b2;letter-spacing:0.3em;animation:slam .45s cubic-bezier(.2,2.2,.3,1) both;}
+  @keyframes slam{from{transform:scale(2.8);opacity:0;}55%{opacity:1;}to{transform:scale(1);opacity:1;}}
+  .lbox{position:fixed;left:0;right:0;height:12vh;background:#000;z-index:56;display:none;}
+  #lboxT{top:0;}#lboxB{bottom:0;}
+  #subs{position:fixed;bottom:14vh;left:0;right:0;z-index:57;display:none;text-align:center;
+    font-family:'Cormorant Garamond',serif;font-size:clamp(16px,2.6vw,24px);color:#e6e2d6;
+    text-shadow:0 2px 12px #000;padding:0 8vw;letter-spacing:0.04em;}
+  #skipCut{position:fixed;right:20px;bottom:14vh;z-index:57;display:none;font-family:'Share Tech Mono';
+    font-size:12px;letter-spacing:0.2em;padding:9px 20px;border:1px solid rgba(200,195,178,0.4);
+    background:rgba(0,0,0,0.5);color:#8a8f96;cursor:pointer;}
+  #skipCut:hover{color:#fff;border-color:#c94444;}
+  #winSeq{position:absolute;left:0;right:0;top:56%;margin:0 auto;z-index:2;font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:clamp(18px,3.2vw,30px);color:#fff;text-shadow:0 2px 20px rgba(0,0,0,0.8);
+    text-align:center;max-width:48ch;line-height:1.75;opacity:0;transition:opacity .7s ease;padding:0 6vw;}
+  #gallery{position:fixed;inset:0;z-index:66;display:none;align-items:center;justify-content:center;background:rgba(1,2,6,0.96);padding:20px;}
+  #gallery .gcard{background:linear-gradient(160deg,#141821,#0a0d14);border:1px solid #323b45;border-radius:16px;padding:26px 30px;max-width:min(680px,94vw);max-height:90vh;overflow:auto;}
+  #gallery h2{font-family:'Cormorant Garamond',serif;font-size:30px;color:#c94444;letter-spacing:0.14em;text-align:center;margin-bottom:6px;}
+  #gallery .gsub{text-align:center;color:#6a7078;font-size:11px;letter-spacing:0.12em;margin-bottom:16px;}
+  #galGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:18px;}
+  #galGrid .gi{text-align:center;}
+  #galGrid canvas{width:100%;border-radius:10px;border:1px solid #2a3550;background:#000;}
+  #galGrid .gl{font-size:10px;color:#8a8f96;letter-spacing:0.1em;margin-top:5px;}
+  #galSnd{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:16px;}
+  #galSnd button,#galClose{font-family:'Share Tech Mono';font-size:11px;background:#0f1420;color:#9ab;border:1px solid #2a3550;border-radius:7px;padding:7px 13px;cursor:pointer;}
+  #galSnd button:hover,#galClose:hover{border-color:#c94444;color:#fff;}
+  #galClose{display:block;margin:0 auto;padding:10px 30px;letter-spacing:0.2em;}
+  #galView{position:fixed;inset:0;z-index:75;display:none;background:#000;cursor:pointer;}
+  #galView canvas{position:absolute;inset:0;width:100%;height:100%;}
+  #galView .gvh{position:absolute;bottom:18px;left:0;right:0;text-align:center;font-family:'Share Tech Mono';
+    font-size:11px;letter-spacing:0.2em;color:rgba(200,195,178,0.5);pointer-events:none;}
+  #inter{position:fixed;inset:0;z-index:58;display:none;align-items:center;justify-content:center;background:#000;}
+  #interText{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,3vw,28px);
+    color:#cfc9ba;text-align:center;max-width:52ch;line-height:1.8;padding:0 8vw;opacity:0;transition:opacity .8s ease;}
+  #escBar{position:fixed;top:0;left:0;right:0;height:7px;background:#11131f;z-index:58;display:none;}
+  #escFill{height:100%;width:0%;background:linear-gradient(90deg,#5adb6a,#c9c3b2);box-shadow:0 0 12px #5adb6a;transition:width .2s linear;}
+  #cert{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.92);padding:20px;}
+  #cert .paper{background:linear-gradient(170deg,#efe6c8,#dfd3ad);color:#3a3020;border:2px solid #8a7a52;
+    padding:34px 40px;max-width:min(480px,92vw);font-family:'Cormorant Garamond',serif;position:relative;
+    box-shadow:0 30px 90px rgba(0,0,0,0.8);transform:rotate(-1.2deg);}
+  #cert .paper h3{text-align:center;letter-spacing:0.18em;font-size:20px;margin-bottom:14px;border-bottom:1px solid #8a7a52;padding-bottom:10px;}
+  #cert .paper p{font-size:15px;line-height:2;margin:8px 0;}
+  #cert .stamp{position:absolute;right:26px;bottom:24px;width:92px;height:92px;border:3px solid rgba(140,30,30,0.65);
+    border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgba(140,30,30,0.7);
+    font-size:10px;text-align:center;letter-spacing:0.12em;transform:rotate(12deg);font-family:'Share Tech Mono';}
+  #cert button{display:block;margin:18px auto 0;font-family:'Share Tech Mono';font-size:13px;letter-spacing:0.2em;
+    padding:11px 32px;border:1px solid #6a5a32;background:transparent;color:#3a3020;cursor:pointer;}
+  #customPanel{position:fixed;inset:0;z-index:47;display:none;align-items:center;justify-content:center;background:rgba(1,2,6,0.94);padding:20px;}
+  #customPanel .cp{background:linear-gradient(160deg,#141821,#0a0d14);border:1px solid #323b45;border-radius:16px;
+    padding:30px 36px;min-width:min(400px,92vw);display:flex;flex-direction:column;gap:14px;}
+  #customPanel h2{font-family:'Cormorant Garamond',serif;font-size:32px;color:#c9c3b2;letter-spacing:0.12em;text-align:center;}
+  #customPanel label{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#9aa0a8;font-size:14px;}
+  #customPanel input[type=range]{accent-color:#c94444;width:170px;}
+  #customPanel .cv2{font-family:'Share Tech Mono';color:#f0a742;width:2ch;text-align:right;}
+  .menuXtra{font-family:'Share Tech Mono';font-size:14px;letter-spacing:0.18em;padding:12px 26px;
+    border:1px solid rgba(90,219,106,0.45);background:transparent;color:#5adb6a;cursor:pointer;display:none;width:fit-content;}
+  .menuXtra:hover{border-color:#5adb6a;box-shadow:0 0 22px rgba(90,219,106,0.3);}
+  #star{display:none;color:#f0d94a;text-shadow:0 0 16px #f0d94a;}
+  #interPic{display:block;margin:0 auto 26px;background:#efe9d8;padding:10px 10px 30px;
+    box-shadow:0 16px 50px rgba(0,0,0,0.7);transform:rotate(-2deg);}
+  #faceRow{display:flex;gap:8px;margin-top:2px;min-height:44px;}
+  #faceRow canvas{width:42px;height:42px;border-radius:8px;border:1px solid #323b45;background:#000;}
+  #nightHint{font-family:'Share Tech Mono';font-size:12px;color:#f0a742;letter-spacing:0.12em;margin-top:-10px;}
+  #nightSelect{display:none;gap:6px;flex-wrap:wrap;align-items:center;}
+  .nsBtn{font-family:'Share Tech Mono';font-size:12px;padding:8px 12px;border:1px solid #2a3550;
+    background:transparent;color:#8a8f96;cursor:pointer;}
+  .nsBtn.on{border-color:#c94444;color:#c9c3b2;}
+  .nsBtn:disabled{opacity:0.3;cursor:default;}
+  #cue.big{font-size:clamp(30px,6vw,50px);color:#fff;font-style:normal;letter-spacing:0.08em;
+    text-shadow:0 0 22px rgba(0,0,0,0.95);}
+  #start.kind{background:#0a0c10;background-image:radial-gradient(circle at 72% 45%,rgba(60,52,34,0.8),#0a0c10 72%);}
+  #trueEnd{position:fixed;inset:0;z-index:85;display:none;background:#000;}
+  #trueEnd canvas{position:absolute;inset:0;width:100%;height:100%;}
+  #trueEndText{position:absolute;bottom:12vh;left:0;right:0;text-align:center;font-family:'Cormorant Garamond',serif;
+    font-style:italic;font-size:clamp(18px,3vw,28px);color:#cfc9ba;opacity:0;transition:opacity .9s;}
+  #credits{position:fixed;inset:0;z-index:86;display:none;background:#000;overflow:hidden;cursor:pointer;}
+  #creditsCol{position:absolute;left:0;right:0;text-align:center;font-family:'Cormorant Garamond',serif;color:#cfc9ba;}
+  #creditsCol h2{font-size:clamp(26px,5vw,44px);letter-spacing:0.2em;margin:26px 0;}
+  #creditsCol .role{font-family:'Share Tech Mono';font-size:11px;letter-spacing:0.3em;color:#6a655a;margin-top:34px;}
+  #creditsCol .name{font-size:clamp(18px,3vw,26px);margin-top:8px;letter-spacing:0.08em;}
+</style>
+</head>
+<body>
+
+<canvas id="c"></canvas>
+<div id="vig"></div><div id="grain"></div><div id="bedred"></div>
+<div id="clock"><span id="ch">12:00</span> <small>AM</small></div>
+<div id="cue"></div>
+<div id="devPanel" style="display:none;position:fixed;left:12px;bottom:12px;z-index:70;background:rgba(5,8,14,0.94);border:1px solid #2a3550;border-radius:10px;padding:12px 14px;font-family:'Share Tech Mono';font-size:11px;max-width:330px;">
+  <div style="color:#c9c3b2;font-size:12px;margin-bottom:6px;">DEV <span style="color:#5a6070">(клавиша `)</span></div>
+  <div id="devStats" style="line-height:1.8;margin-bottom:8px;color:#9ab;"></div>
+  <div style="display:flex;flex-wrap:wrap;gap:5px;">
+    <button class="devNight" data-hs="42">42с/час</button>
+    <button class="devNight" data-hs="15">15с/час</button>
+    <button class="devNight" data-hs="6">6с/час</button>
+    <button id="devNightUp">+ночь</button><button id="devNight1">ночь=1</button><button id="devSkip">+час</button><button id="devWin">победа</button><button id="devClear">сброс события</button>
+    <button class="devEv" data-ev="door_slow">дверь</button><button class="devEv" data-ev="short">тихий топот</button>
+    <button class="devEv" data-ev="fast">быстрый</button><button class="devEv" data-ev="window">окно</button>
+    <button class="devEv" data-ev="neighbor">сосед</button><button class="devEv" data-ev="bug">бабайка</button>
+    <button id="devEsc">побег</button><button id="devMem">ночь 7</button>
+    <button id="devCert">справка</button><button id="devInter">вставка</button>
+    <button id="devUnlock">открыть всё</button><button id="devSecret">изнанка</button><button id="devTrue">концовка</button>
+  </div>
+</div>
+<div id="hint">тяни мышью — повернуть голову</div>
+<div id="gallery"><div class="gcard">
+  <h2 id="galTitle">СЕКРЕТНАЯ ГАЛЕРЕЯ</h2>
+  <div class="gsub" id="galSub">ты досидел до них — теперь они твои</div>
+  <div id="galGrid"></div>
+  <div id="galSnd"></div>
+  <button id="galClose">ЗАКРЫТЬ</button>
+</div></div>
+<div id="inter"><div style="display:flex;flex-direction:column;align-items:center;"><canvas id="interPic" width="260" height="190"></canvas><div id="interText"></div></div></div>
+<div id="escBar"><div id="escFill"></div></div>
+<div id="cert"><div class="paper">
+  <h3 id="certTitle">СПРАВКА ОБ ОТЪЕЗДЕ</h3>
+  <p id="certL1">Настоящим удостоверяется, что воспитанник третьего отряда</p>
+  <p style="text-align:center;border-bottom:1px dotted #6a5a32;font-size:18px;">&nbsp;тот, кто дожил&nbsp;</p>
+  <p id="certL2">выбыл из детского лагеря «Ласточка» <b>живым</b>, пережив шесть ночей и один побег.</p>
+  <p id="certL3" style="font-size:12px;color:#6a5a32;">Претензий к лагерю не имеет. Ночами спит. Почти.</p>
+  <div class="stamp">ЛАСТОЧКА<br>·1989·</div>
+  <button id="certBtn">ЗАБРАТЬ</button>
+</div></div>
+<div id="customPanel"><div class="cp">
+  <h2 id="cpTitle">СВОЯ НОЧЬ</h2>
+  <label>Дверь <input type="range" id="cDoor" min="0" max="10" value="5"><span class="cv2" id="vDoor">5</span></label>
+  <label>Топот <input type="range" id="cSteps" min="0" max="10" value="5"><span class="cv2" id="vSteps">5</span></label>
+  <label>Окно <input type="range" id="cWin" min="0" max="10" value="5"><span class="cv2" id="vWin">5</span></label>
+  <label>Сосед <input type="range" id="cNb" min="0" max="10" value="5"><span class="cv2" id="vNb">5</span></label>
+  <label>Бабайка <input type="range" id="cBug" min="0" max="10" value="5"><span class="cv2" id="vBug">5</span></label>
+  <div style="display:flex;gap:10px;justify-content:center;margin-top:6px;">
+    <button id="cpStart" style="font-family:'Share Tech Mono';font-size:13px;letter-spacing:0.2em;padding:11px 28px;border:1px solid #c94444;background:transparent;color:#c94444;cursor:pointer;">НАЧАТЬ</button>
+    <button id="cpBack" style="font-family:'Share Tech Mono';font-size:13px;letter-spacing:0.2em;padding:11px 28px;border:1px solid #c9c3b2;background:transparent;color:#c9c3b2;cursor:pointer;">НАЗАД</button>
+  </div>
+</div></div>
+<div id="trueEnd"><canvas id="trueEndCv"></canvas><div id="trueEndText"></div></div>
+<div id="credits"><div id="creditsCol"></div></div>
+<div id="galView"><canvas id="galViewCv"></canvas><div class="gvh">клик — закрыть</div></div>
+<div id="nightCard"><div id="nightCardText">ПЕРВАЯ НОЧЬ</div></div>
+<div class="lbox" id="lboxT"></div><div class="lbox" id="lboxB"></div>
+<div id="subs"></div>
+<button id="skipCut">ПРОПУСТИТЬ ▸</button>
+<div id="scare"><canvas id="scareCv"></canvas></div>
+<div id="flash"></div>
+<div id="win"><canvas id="winCv"></canvas>
+  <div id="winSeq"></div>
+  <div id="winFinal" style="display:none;flex-direction:column;align-items:center;gap:16px;position:relative;z-index:2;">
+    <h1>6 утра</h1><p>ты пережил ночь</p><button onclick="window.__softReset()">СНАЧАЛА</button>
+  </div>
+</div>
+<div id="lang" style="position:fixed;inset:0;z-index:55;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:26px;background:#000;">
+  <div style="font-family:'Cormorant Garamond',serif;font-size:34px;color:#c9c3b2;letter-spacing:0.2em;">ЯЗЫК / LANGUAGE</div>
+  <div style="display:flex;gap:18px;">
+    <button class="langBtn" data-lang="ru" style="font-family:'Share Tech Mono';font-size:16px;letter-spacing:0.2em;padding:16px 42px;border:1px solid #c9c3b2;background:transparent;color:#c9c3b2;cursor:pointer;transition:.3s;">РУССКИЙ</button>
+    <button class="langBtn" data-lang="en" style="font-family:'Share Tech Mono';font-size:16px;letter-spacing:0.2em;padding:16px 42px;border:1px solid #c9c3b2;background:transparent;color:#c9c3b2;cursor:pointer;transition:.3s;">ENGLISH</button>
+  </div>
+</div>
+
+<div id="warn" style="position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;flex-direction:column;gap:24px;background:#000;text-align:center;padding:24px;">
+  <div id="warnTitle" style="font-family:'Cormorant Garamond',serif;font-size:clamp(26px,6vw,44px);color:#c94444;letter-spacing:0.12em;">⚠ ПРЕДУПРЕЖДЕНИЕ</div>
+  <div id="warnBody" style="max-width:46ch;color:#9a958a;font-size:13px;line-height:2.1;letter-spacing:0.04em;"></div>
+  <button id="warnBtn" style="font-family:'Share Tech Mono';font-size:14px;letter-spacing:0.25em;padding:14px 44px;border:1px solid #c94444;background:transparent;color:#c94444;cursor:pointer;transition:.3s;"></button>
+</div>
+
+<div id="diffpick" style="position:fixed;inset:0;z-index:48;display:none;align-items:center;justify-content:center;flex-direction:column;gap:26px;background:radial-gradient(ellipse at 15% 15%,rgba(50,12,12,0.4),transparent 50%),radial-gradient(ellipse at 85% 85%,rgba(12,18,38,0.45),transparent 55%),radial-gradient(circle at 50% 42%,rgba(26,8,8,0.6),#000 82%);box-shadow:inset 0 0 180px 40px rgba(0,0,0,0.9);padding:24px;">
+  <div id="dpTitle" style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,6vw,44px);color:#c9c3b2;letter-spacing:0.16em;">ВЫБЕРИ СВОЮ НОЧЬ</div>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;max-width:760px;">
+    <div class="dpcard" data-diff="1.35" style="width:min(200px,80vw);border:1px solid #2a3550;border-radius:14px;padding:22px 16px;text-align:center;cursor:pointer;transition:.25s;background:rgba(10,14,26,0.6);">
+      <div style="font-size:34px;">🕯</div><div class="dpt" style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#7fdfff;margin-top:8px;">Свеча</div>
+      <div class="dpd" style="font-size:11px;color:#8a8f96;line-height:1.8;margin-top:8px;">У тебя есть время подумать.<br>Оно двигается медленно.</div></div>
+    <div class="dpcard" data-diff="1" style="width:min(200px,80vw);border:1px solid #2a3550;border-radius:14px;padding:22px 16px;text-align:center;cursor:pointer;transition:.25s;background:rgba(10,14,26,0.6);">
+      <div style="font-size:34px;">🌙</div><div class="dpt" style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#c9c3b2;margin-top:8px;">Полночь</div>
+      <div class="dpd" style="font-size:11px;color:#8a8f96;line-height:1.8;margin-top:8px;">Так, как эта ночь<br>должна была случиться.</div></div>
+    <div class="dpcard" data-diff="0.72" style="width:min(200px,80vw);border:1px solid #2a3550;border-radius:14px;padding:22px 16px;text-align:center;cursor:pointer;transition:.25s;background:rgba(10,14,26,0.6);">
+      <div style="font-size:34px;">💀</div><div class="dpt" style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#c94444;margin-top:8px;">Бессонница</div>
+      <div class="dpd" style="font-size:11px;color:#8a8f96;line-height:1.8;margin-top:8px;">Оно уже знает, где ты.<br>Оно быстрее тебя.</div></div>
+  </div>
+  <div id="dpHint" style="font-size:11px;color:#5a564c;letter-spacing:0.15em;">выбор обязателен · нажми на карту</div>
+</div>
+
+<div id="settings" style="position:fixed;inset:0;z-index:45;display:none;align-items:center;justify-content:center;background:rgba(1,2,6,0.92);padding:24px;">
+  <div style="background:linear-gradient(160deg,#141821,#0a0d14);border:1px solid #323b45;border-radius:16px;box-shadow:0 20px 80px rgba(0,0,0,0.8), inset 0 1px 0 rgba(200,195,178,0.06);padding:36px 40px;display:flex;flex-direction:column;gap:24px;min-width:min(420px,92vw);">
+    <div id="setTitle" style="font-family:'Cormorant Garamond',serif;font-size:42px;color:#c9c3b2;letter-spacing:0.14em;text-align:center;">НАСТРОЙКИ</div>
+    <label style="display:flex;justify-content:space-between;align-items:center;gap:16px;color:#9aa0a8;font-size:16px;"><span id="lblVol">Громкость</span>
+      <input type="range" id="setVol" min="0" max="100" value="55" style="accent-color:#c94444;width:190px;height:22px;"></label>
+    <label style="display:flex;justify-content:space-between;align-items:center;gap:16px;color:#9aa0a8;font-size:16px;"><span id="lblSens">Чувствительность мыши</span>
+      <input type="range" id="setSens" min="50" max="200" value="100" style="accent-color:#c94444;width:190px;height:22px;"></label>
+    <label style="display:flex;justify-content:space-between;align-items:center;gap:16px;color:#9aa0a8;font-size:16px;"><span id="lblFull">Полный экран</span>
+      <input type="checkbox" id="setFull" style="accent-color:#c94444;width:22px;height:22px;"></label>
+    <label style="display:flex;justify-content:space-between;align-items:center;gap:16px;color:#9aa0a8;font-size:16px;"><span id="lblSubs">Субтитры</span>
+      <input type="checkbox" id="setSubs" checked style="accent-color:#c94444;width:22px;height:22px;"></label>
+    <label style="display:flex;justify-content:space-between;align-items:center;gap:16px;color:#9aa0a8;font-size:16px;"><span id="lblQuiet">Тише скримеры</span>
+      <input type="checkbox" id="setQuiet" style="accent-color:#c94444;width:22px;height:22px;"></label>
+    <label style="display:flex;justify-content:space-between;align-items:center;gap:16px;color:#9aa0a8;font-size:16px;"><span id="lblHints">Подсказки во всех ночах</span>
+      <input type="checkbox" id="setHints" style="accent-color:#c94444;width:22px;height:22px;"></label>
+    <label style="display:flex;justify-content:space-between;align-items:center;gap:16px;color:#9aa0a8;font-size:16px;"><span id="lblShake">Тряска и вспышки</span>
+      <input type="checkbox" id="setShake" checked style="accent-color:#c94444;width:22px;height:22px;"></label>
+    <div>
+      <div id="lblDiff" style="color:#9aa0a8;font-size:16px;margin-bottom:10px;">Сложность</div>
+      <div id="diffCards" style="display:flex;gap:10px;">
+        <div class="dcard" data-diff="1.35" style="flex:1;border:1px solid #323b45;border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;transition:.2s;">
+          <div class="dname" style="font-size:14px;color:#7fdfff;">🕯</div><div class="dtitle" style="font-size:13px;color:#c9c3b2;margin-top:4px;">Свеча</div><div class="ddesc" style="font-size:10px;color:#6a7078;margin-top:3px;">больше времени</div></div>
+        <div class="dcard sel" data-diff="1" style="flex:1;border:1px solid #c94444;border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;transition:.2s;background:rgba(201,68,68,0.08);">
+          <div class="dname" style="font-size:14px;">🌙</div><div class="dtitle" style="font-size:13px;color:#c9c3b2;margin-top:4px;">Полночь</div><div class="ddesc" style="font-size:10px;color:#6a7078;margin-top:3px;">как задумано</div></div>
+        <div class="dcard" data-diff="0.72" style="flex:1;border:1px solid #323b45;border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;transition:.2s;">
+          <div class="dname" style="font-size:14px;">💀</div><div class="dtitle" style="font-size:13px;color:#c9c3b2;margin-top:4px;">Бессонница</div><div class="ddesc" style="font-size:10px;color:#6a7078;margin-top:3px;">оно быстрее тебя</div></div>
+      </div>
+    </div>
+    <button id="setBack" style="font-family:'Share Tech Mono';font-size:14px;letter-spacing:0.2em;padding:13px 34px;border:1px solid #c9c3b2;background:transparent;color:#c9c3b2;cursor:pointer;align-self:center;">НАЗАД</button>
+  </div>
+</div>
+
+<div id="start">
+  <div id="menuL">
+    <h1 class="mi" style="display:flex;gap:14px;align-items:baseline;"><span id="star">★</span><span id="gameTitle"></span></h1>
+    <div id="menuSub" class="mi"></div>
+    <div id="faceRow" class="mi"></div>
+    <button id="startBtn" class="mi"></button>
+    <button id="openSettings" class="mi" style="font-family:'Share Tech Mono';font-size:15px;letter-spacing:0.2em;padding:14px 30px;border:1px solid rgba(200,195,178,0.4);background:transparent;color:#8a8f96;cursor:pointer;transition:.3s;"></button>
+    <div id="nightHint" class="mi"></div>
+    <div id="nightSelect" class="mi"></div>
+    <button id="btnN6" class="menuXtra mi">НОЧЬ 6: ПОБЕГ</button>
+    <button id="btnN7" class="menuXtra mi" style="border-color:rgba(240,217,74,0.45);color:#f0d94a;">НОЧЬ 7: ???</button>
+    <button id="btnCustom" class="menuXtra mi" style="border-color:rgba(127,223,255,0.45);color:#7fdfff;">СВОЯ НОЧЬ</button>
+    <button id="openGallery" class="mi" style="display:none;font-family:'Share Tech Mono';font-size:14px;letter-spacing:0.2em;padding:12px 26px;border:1px solid rgba(201,68,68,0.5);background:transparent;color:#c94444;cursor:pointer;">ГАЛЕРЕЯ</button>
+    <div class="r mi" id="startBody" style="text-align:left;"></div>
+  </div>
+  <canvas id="menuFace"></canvas>
+  <div id="menuVer">v1.0 · dev-меню: клавиша `</div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
