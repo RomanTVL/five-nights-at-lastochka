@@ -46,7 +46,8 @@ window.GAME_DATA={
    "dp1": "У тебя есть время подумать.<br>Оно двигается медленно.",
    "dp2": "Так, как эта ночь<br>должна была случиться.",
    "dp3": "Оно уже знает, где ты.<br>Оно быстрее тебя.",
-   "menuSub": "выживи до рассвета"
+   "menuSub": "выживи до рассвета",
+   "warnTip": "<b style=\"color:#c9c3b2\">F11</b> — полноэкранный режим для полного погружения<br>обязательно надень <b style=\"color:#c9c3b2\">наушники</b>"
   },
   "en": {
    "warnTitle": "⚠ WARNING",
@@ -93,53 +94,54 @@ window.GAME_DATA={
    "dp1": "You have time to think.<br>It moves slowly.",
    "dp2": "The way this night<br>was meant to happen.",
    "dp3": "It already knows where you are.<br>It is faster than you.",
-   "menuSub": "survive until dawn"
+   "menuSub": "survive until dawn",
+   "warnTip": "<b style=\"color:#c9c3b2\">F11</b> — fullscreen for full immersion<br>be sure to wear <b style=\"color:#c9c3b2\">headphones</b>"
   }
  },
  "SUBS": [
   [
    0.5,
-   4.5,
-   "— Дошли. Вон твой корпус, у самого леса."
+   4.6,
+   "— Дошли. Вон твой корпус. Третий, у самого леса."
   ],
   [
-   5,
-   9.8,
-   "— Ночью здесь двое гостей. Запомни обоих."
+   5.1,
+   10,
+   "— Не спрашивай, почему он один пустой. Просто слушай и запоминай."
   ],
   [
-   10.3,
-   16.2,
-   "— Первый ходит по коридору. Если дверь поползла — вставай и держи. Секунд пять у тебя есть."
+   10.5,
+   16.4,
+   "— Ночью по коридору кто-то ходит. Если дверь поползла — вставай и держи. Секунд пять у тебя есть."
   ],
   [
-   16.7,
-   22.6,
-   "— Вторые приходят к окну. Постучат — постучи в ответ, дважды. Они просто проверяют, живой ли."
+   16.9,
+   22.8,
+   "— И в окно постучат. Постучи в ответ, дважды. Они проверяют, есть ли внутри живые."
   ],
   [
-   23.1,
-   27,
-   "— Остальных тебе знать пока рано."
+   23.3,
+   27.4,
+   "— Про остальных расскажу. Если доживёшь до второй ночи."
   ],
   [
-   27.5,
-   31,
-   "— Шесть утра — и ты свободен. Спокойной ночи."
+   27.9,
+   31.5,
+   "— В шесть утра дадут свет. Тогда и поспишь."
   ]
  ],
  "ENDING": {
   "ru": [
    "Доброе утро, Ласточка.",
-   "Вожатая пересчитала отряд — все на месте. Кроме твоего соседа.",
-   "Его кровать была заправлена. Идеально. Как будто в ней никогда не спали.",
-   "— Какой сосед? — сказала она. — Ты всю смену жил один."
+   "Свет дали ровно в шесть. Как и обещали.",
+   "Вожатая пересчитала отряд у крыльца — все на месте.",
+   "— В третьем корпусе? — переспросила она. — Там с восемьдесят девятого никто не живёт."
   ],
   "en": [
    "Good morning, Swallow.",
-   "The counselor counted the squad — everyone present. Except your neighbor.",
-   "His bed was made. Perfectly. As if no one had ever slept in it.",
-   "\"What neighbor?\" she said. \"You have been alone all along.\""
+   "The power came back at six sharp. Just as promised.",
+   "The counselor counted the squad by the porch — everyone present.",
+   "\"Cabin three?\" she asked. \"No one has lived there since eighty-nine.\""
   ]
  },
  "NIGHTS": [
@@ -200,52 +202,216 @@ window.GAME_DATA={
   "ru": [
    [
     "День второй.",
-    "Сосед на завтрак не пришёл. Зато под полом всю ночь что-то скреблось.",
-    "Завхоз буркнул: «Услышишь быстрый топот — вставай и дави дверь. Оно маленькое, но настырное».",
-    "Он не шутил."
+    "В журнале дежурств за восемьдесят девятый вырваны страницы. Уцелела одна.",
+    "«Ночью в коридоре быстрые шаги. Не человек. Вставать и давить дверь — оно жмёт снизу».",
+    "Почерк рваный. Будто писали в темноте."
    ],
    [
     "День третий.",
-    "В списке отряда — двенадцать фамилий. Кроватей — тринадцать.",
-    "Вожатая шепнула: «Если сосед повернётся к тебе — замри. Совсем. Он слушает вместо них».",
-    "Ты решил не спрашивать, вместо кого."
+    "В списке отряда двенадцать фамилий. Кроватей в корпусе тринадцать.",
+    "На спинке тринадцатой выцарапано: «если он повернётся — не шевелись».",
+    "Ниже, другой рукой: «он не злой. он слушает вместо нас»."
    ],
    [
     "День четвёртый.",
-    "На доске почёта — выцветшее фото смены 1989-го. Третий слева очень похож на твоего соседа.",
-    "Сторож сказал: «Застучит под кроватью — вставай сразу. Не жди, пока края покраснеют».",
-    "Подпись под фото стёрта ногтем."
+    "Под кроватью лежал фонарик. Севший, с обгрызенной кнопкой.",
+    "На корпусе нацарапано имя — крупными детскими буквами.",
+    "Ночью снизу постучали. Три раза. Так стучат, когда спрашивают."
    ],
    [
     "День пятый.",
-    "Вожатая поймала тебя у ворот: «Последняя ночь. Теперь придут все. И быстрее, чем раньше».",
+    "Свет в корпусе моргает весь вечер. Точно как в ту грозу.",
+    "Вожатая сказала: «Последняя ночь. Потерпи, завтра за тобой приедут».",
     "Она сказала это так, будто извинялась."
    ]
   ],
   "en": [
    [
     "Day two.",
-    "Your neighbor never came to breakfast. But something scratched under the floor all night.",
-    "The caretaker muttered: \"Fast footsteps — get up and push the door. It is small but stubborn.\"",
-    "He was not joking."
+    "Pages are torn out of the 1989 duty log. One survived.",
+    "\"Fast steps in the hallway at night. Not human. Get up and push the door — it presses from below.\"",
+    "The handwriting is ragged. As if written in the dark."
    ],
    [
     "Day three.",
     "The squad list has twelve names. The cabin has thirteen beds.",
-    "The counselor whispered: \"If your neighbor turns to you — freeze. Completely. He listens for them.\"",
-    "You chose not to ask instead of whom."
+    "Scratched into the thirteenth headboard: \"if he turns around, do not move\".",
+    "Below, in a different hand: \"he is not evil. he listens instead of us\"."
    ],
    [
     "Day four.",
-    "On the honor board — a faded photo of the 1989 session. The third boy from the left looks familiar.",
-    "The watchman said: \"Knocking under the bed — get up at once. Do not wait for the edges to turn red.\"",
-    "The caption is scratched out with a fingernail."
+    "There was a flashlight under the bed. Dead, its button chewed.",
+    "A name is scratched on the casing in large childish letters.",
+    "That night something knocked from below. Three times. The way you knock to ask."
    ],
    [
     "Day five.",
-    "The counselor caught you by the gates: \"Last night. Now they all come. Faster than before.\"",
+    "The lights have been flickering all evening. Exactly like during that storm.",
+    "The counselor said: \"Last night. Hold on, they come for you tomorrow.\"",
     "She said it like an apology."
    ]
+  ]
+ },
+ "NIGHT7": {
+  "ru": [
+   "Сегодня никто не придёт. Сегодня дали свет.",
+   "Тридцать семь лет никто не досиживал до шести. Ты досидел.",
+   "Спасибо за свободу. Побудь ещё немного — мы расскажем, кто мы."
+  ],
+  "en": [
+   "No one is coming tonight. Tonight the power is back.",
+   "For thirty-seven years no one stayed awake until six. You did.",
+   "Thank you for our freedom. Stay a little longer — we will tell you who we are."
+  ]
+ },
+ "MONSTERS": {
+  "ru": [
+   {
+    "kind": "door",
+    "name": "Долговязый",
+    "who": "Пал Палыч, электрик",
+    "lines": [
+     "Его звали Пал Палыч. Он чинил проводку в лагере двадцать лет.",
+     "В ту грозу он полез на столб один — ждать бригаду было некогда.",
+     "Свет так и не дали. Его нашли утром, у самого корпуса.",
+     "Он до сих пор идёт по коридору и светит фонарём, которого нет.",
+     "Он не ищет тебя. Он ищет рубильник."
+    ]
+   },
+   {
+    "kind": "window",
+    "name": "Те, у окна",
+    "who": "четверо из второго отряда",
+    "lines": [
+     "Их было четверо. Они решили, что дойдут до посёлка сами.",
+     "Ночью, без фонарей, через лес — а до посёлка восемь километров.",
+     "Их искали три дня. Нашли только куртки у реки.",
+     "Теперь они стучат в окна: смотрят, горит ли внутри свет.",
+     "Если постучать в ответ — они думают, что их всё ещё ждут."
+    ]
+   },
+   {
+    "kind": "fast",
+    "name": "Рой",
+    "who": "то, что было здесь раньше",
+    "lines": [
+     "Оно жило в этом лесу задолго до лагеря.",
+     "Пока горели фонари, оно не подходило ближе опушки.",
+     "Три ночи темноты — и оно выучило дорогу к корпусам.",
+     "Своих глаз у него нет. Оно берёт чужие, чтобы видеть.",
+     "Дверь оно не откроет. Оно ждёт, пока откроют сами."
+    ]
+   },
+   {
+    "kind": "neighbor",
+    "name": "Сосед",
+    "who": "Ильдар, койка у стены",
+    "lines": [
+     "Ильдар с соседней койки. Он и в первую тёмную ночь не закричал.",
+     "Пока отряд уводили к воротам, он остался лежать и слушать.",
+     "В половине двенадцатого свет ударил в корпус.",
+     "Балка с потолка легла ему на лицо. Он даже не успел отвернуться.",
+     "Теперь он лежит и слушает темноту. Вместо тебя."
+    ]
+   },
+   {
+    "kind": "bug",
+    "name": "Тот, что под кроватью",
+    "who": "самый младший",
+    "lines": [
+     "Самый младший в отряде. Ему было восемь.",
+     "Он залез под койку с фонариком и не вышел, сколько его ни звали.",
+     "Когда ударило, койка сложилась вместе с верхним ярусом.",
+     "То, что нашли под ней утром, вынимали из досок. Опознали по фонарику.",
+     "Он и теперь стучит снизу. Спрашивает, дали ли наконец свет."
+    ]
+   },
+   {
+    "kind": "buff",
+    "name": "Вожатый",
+    "who": "девятнадцать лет, первая смена",
+    "lines": [
+     "Ему было девятнадцать. Первая смена, первый его отряд.",
+     "Когда погас свет, он повёл детей к воротам — на ощупь, по одному.",
+     "Он довёл всех до ворот и вернулся. За последним.",
+     "Из корпуса он больше не вышел.",
+     "Он и сейчас стоит в дверях. Считает, все ли на месте."
+    ]
+   }
+  ],
+  "en": [
+   {
+    "kind": "door",
+    "name": "The Tall One",
+    "who": "Pal Palych, the electrician",
+    "lines": [
+     "His name was Pal Palych. He kept the camp wired for twenty years.",
+     "During that storm he climbed the pole alone — there was no time to wait for a crew.",
+     "The power never came back. They found him in the morning, by the cabin.",
+     "He still walks the hallway, shining a flashlight that is not there.",
+     "He is not looking for you. He is looking for the breaker."
+    ]
+   },
+   {
+    "kind": "window",
+    "name": "The Ones at the Window",
+    "who": "four from the second squad",
+    "lines": [
+     "There were four of them. They decided to reach the village on their own.",
+     "At night, without lights, through the forest — and the village is five miles away.",
+     "They searched for three days. They only found the jackets by the river.",
+     "Now they knock on windows, checking whether a light is on inside.",
+     "Knock back, and they believe someone is still waiting for them."
+    ]
+   },
+   {
+    "kind": "fast",
+    "name": "The Swarm",
+    "who": "what was here before",
+    "lines": [
+     "It lived in this forest long before the camp did.",
+     "While the lamps burned, it never came closer than the treeline.",
+     "Three nights of darkness, and it learned the way to the cabins.",
+     "It has no eyes of its own. It takes others to see.",
+     "It will not open the door. It waits for the door to be opened."
+    ]
+   },
+   {
+    "kind": "neighbor",
+    "name": "The Neighbor",
+    "who": "Ildar, the bed by the wall",
+    "lines": [
+     "Ildar from the next bed. He did not scream even on the first dark night.",
+     "While the squad was led to the gates, he stayed behind to listen.",
+     "At half past eleven the current reached the cabin.",
+     "A ceiling beam came down across his face. He never even turned away.",
+     "Now he lies and listens to the dark. Instead of you."
+    ]
+   },
+   {
+    "kind": "bug",
+    "name": "The One Under the Bed",
+    "who": "the youngest",
+    "lines": [
+     "The youngest in the squad. He was eight.",
+     "He crawled under the bed with a flashlight and would not come out, however they called.",
+     "When it struck, the bunk folded in on itself, upper tier and all.",
+     "What they found under it in the morning was pulled out of the boards. They identified him by the flashlight.",
+     "He still knocks from below. Asking whether the power is back yet."
+    ]
+   },
+   {
+    "kind": "buff",
+    "name": "The Counselor",
+    "who": "nineteen, his first season",
+    "lines": [
+     "He was nineteen. His first season, his first squad.",
+     "When the lights died, he led the children to the gates — by touch, one by one.",
+     "He got them all to the gates and went back. For the last one.",
+     "He never walked out of that cabin again.",
+     "He still stands in the doorway. Counting whether everyone is there."
+    ]
+   }
   ]
  }
 };
