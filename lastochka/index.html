@@ -31,9 +31,9 @@
   #win p{color:#eee;font-size:15px;letter-spacing:0.1em;}
   #win button,#startBtn{font-family:'Share Tech Mono';font-size:15px;letter-spacing:0.2em;padding:14px 40px;border:1px solid rgba(255,255,255,0.6);background:rgba(0,0,0,0.3);color:#fff;cursor:pointer;transition:.3s;}
   #win button:hover,#startBtn:hover{background:rgba(255,255,255,0.15);letter-spacing:0.3em;}
-  #start{position:fixed;inset:0;z-index:40;display:flex;background:#000;background-image:radial-gradient(circle at 72% 45%,rgba(36,22,24,0.95),#000 72%);overflow:hidden;}
-  #menuL{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center;gap:20px;padding:0 5vw;max-width:min(460px,68vw);text-align:left;}
-  #menuFace{position:absolute;right:-4%;top:0;height:100%;width:62%;z-index:1;pointer-events:auto;cursor:default;}
+  #start{position:fixed;inset:0;z-index:40;display:none;background:#07070a;background-image:radial-gradient(ellipse 120% 90% at 62% 50%,rgba(30,20,22,0.85),#07070a 78%);overflow:hidden;}
+  #menuL{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center;gap:20px;padding:0 6vw;max-width:min(470px,66vw);text-align:left;}
+  #menuFace{position:absolute;right:-2%;top:0;height:100%;width:58%;z-index:1;pointer-events:auto;cursor:default;opacity:0.9;}
   #menuL h1{text-align:left;}
   .mi{opacity:0;animation:menuIn .9s ease forwards;}
   .mi:nth-child(1){animation-delay:.15s}.mi:nth-child(2){animation-delay:.45s}.mi:nth-child(3){animation-delay:.65s}.mi:nth-child(4){animation-delay:.9s}.mi:nth-child(5){animation-delay:1.15s}
@@ -85,8 +85,8 @@
   #inter{position:fixed;inset:0;z-index:58;display:none;align-items:center;justify-content:center;background:#000;}
   #interText{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,3vw,28px);
     color:#cfc9ba;text-align:center;max-width:52ch;line-height:1.8;padding:0 8vw;opacity:0;transition:opacity .8s ease;}
-  #escBar{position:fixed;top:0;left:0;right:0;height:7px;background:#11131f;z-index:58;display:none;}
-  #escFill{height:100%;width:0%;background:linear-gradient(90deg,#5adb6a,#c9c3b2);box-shadow:0 0 12px #5adb6a;transition:width .2s linear;}
+  #escBar{position:fixed;top:0;left:0;right:0;height:6px;background:#140a0c;z-index:58;display:none;}
+  #escFill{height:100%;width:0%;background:linear-gradient(90deg,#7a2028,#a83a42);box-shadow:0 0 8px rgba(168,58,66,0.5);transition:width .2s linear;}
   #cert{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.92);padding:20px;}
   #cert .paper{background:linear-gradient(170deg,#efe6c8,#dfd3ad);color:#3a3020;border:2px solid #8a7a52;
     padding:34px 40px;max-width:min(480px,92vw);font-family:'Cormorant Garamond',serif;position:relative;
@@ -108,7 +108,9 @@
   .menuXtra{font-family:'Share Tech Mono';font-size:14px;letter-spacing:0.18em;padding:12px 26px;
     border:1px solid rgba(90,219,106,0.45);background:transparent;color:#5adb6a;cursor:pointer;display:none;width:fit-content;}
   .menuXtra:hover{border-color:#5adb6a;box-shadow:0 0 22px rgba(90,219,106,0.3);}
-  #star{display:none;color:#f0d94a;text-shadow:0 0 16px #f0d94a;}
+  #star{display:none;}
+  .starOne{font-size:0.85em;}
+  @keyframes starPulse{0%,100%{transform:scale(1);opacity:0.85}50%{transform:scale(1.18);opacity:1}}
   #interPic{display:block;margin:0 auto 26px;background:#efe9d8;padding:10px 10px 30px;
     box-shadow:0 16px 50px rgba(0,0,0,0.7);transform:rotate(-2deg);}
   #faceRow{display:flex;gap:8px;margin-top:2px;min-height:44px;}
@@ -128,9 +130,36 @@
     font-style:italic;font-size:clamp(18px,3vw,28px);color:#cfc9ba;opacity:0;transition:opacity .9s;}
   #credits{position:fixed;inset:0;z-index:86;display:none;background:#000;overflow:hidden;cursor:pointer;}
   #creditsCol{position:absolute;left:0;right:0;text-align:center;font-family:'Cormorant Garamond',serif;color:#cfc9ba;}
-  #creditsCol h2{font-size:clamp(26px,5vw,44px);letter-spacing:0.2em;margin:26px 0;}
-  #creditsCol .role{font-family:'Share Tech Mono';font-size:11px;letter-spacing:0.3em;color:#6a655a;margin-top:34px;}
+  #creditsCol h2{font-size:clamp(26px,5vw,44px);letter-spacing:0.2em;margin:20px 0;}
+  #creditsCol .role{font-family:'Share Tech Mono';font-size:11px;letter-spacing:0.3em;color:#6a655a;margin-top:26px;}
   #creditsCol .name{font-size:clamp(18px,3vw,26px);margin-top:8px;letter-spacing:0.08em;}
+  /* ---- УЛЬТИМАТИВНЫЙ АРХИВ: киноплёнка ---- */
+  #arch{position:fixed;inset:0;z-index:68;display:none;background:#08080b;
+    background-image:radial-gradient(ellipse 90% 70% at 50% 45%,rgba(30,26,22,0.9),#08080b 80%);overflow:hidden;}
+  #archTop,#archBot{position:absolute;left:0;right:0;height:38px;background:#14120f;z-index:2;
+    background-image:repeating-linear-gradient(90deg,#14120f 0 26px,#0a0908 26px 30px,#14120f 30px 56px);}
+  #archTop{top:0;border-bottom:1px solid #2a251d;}#archBot{bottom:0;border-top:1px solid #2a251d;}
+  #archTop::after,#archBot::after{content:'';position:absolute;inset:9px 0;
+    background-image:repeating-linear-gradient(90deg,transparent 0 14px,#05050a 14px 30px,transparent 30px 56px);}
+  #archStage{position:absolute;inset:38px 0;display:flex;align-items:center;justify-content:center;perspective:1200px;}
+  #archCard{position:relative;display:flex;flex-direction:column;align-items:center;gap:14px;
+    transition:transform .38s cubic-bezier(.2,.9,.3,1),opacity .38s;}
+  #archFrame{background:#0d0d10;border:2px solid #2f2a22;box-shadow:0 24px 70px rgba(0,0,0,0.85), inset 0 0 60px rgba(0,0,0,0.7);}
+  #archFrame canvas{display:block;}
+  #archNum{font-family:'Share Tech Mono';font-size:10px;letter-spacing:0.3em;color:#5a5348;}
+  #archTitle{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3vw,30px);color:#e2dcc9;letter-spacing:0.1em;text-align:center;}
+  #archTag{font-family:'Share Tech Mono';font-size:11px;letter-spacing:0.22em;color:#8a7f66;text-transform:uppercase;}
+  #archDesc{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(14px,1.9vw,19px);
+    color:#a9a293;max-width:60ch;text-align:center;line-height:1.85;padding:0 6vw;}
+  #archPlay{font-family:'Share Tech Mono';font-size:12px;letter-spacing:0.2em;padding:9px 22px;
+    border:1px solid rgba(240,217,74,0.5);background:transparent;color:#f0d94a;cursor:pointer;}
+  #archPlay:hover{background:rgba(240,217,74,0.1);}
+  #archNav{position:absolute;bottom:52px;left:0;right:0;text-align:center;z-index:3;
+    font-family:'Share Tech Mono';font-size:11px;letter-spacing:0.25em;color:rgba(200,195,178,0.45);}
+  .archArrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;font-size:34px;color:rgba(200,195,178,0.3);
+    cursor:pointer;user-select:none;transition:.2s;padding:20px;}
+  .archArrow:hover{color:#f0d94a;}
+  #archPrev{left:2vw;}#archNext{right:2vw;}
 </style>
 </head>
 <body>
@@ -146,23 +175,16 @@
     <button class="devNight" data-hs="42">42с/час</button>
     <button class="devNight" data-hs="15">15с/час</button>
     <button class="devNight" data-hs="6">6с/час</button>
-    <button id="devNightUp">+ночь</button><button id="devNight1">ночь=1</button><button id="devSkip">+час</button><button id="devWin">победа</button><button id="devClear">сброс события</button>
+    <button id="devNightUp">+ночь</button><button class="devSetN" data-n="1">ночь 1</button><button class="devSetN" data-n="2">ночь 2</button><button class="devSetN" data-n="3">ночь 3</button><button class="devSetN" data-n="4">ночь 4</button><button class="devSetN" data-n="5">ночь 5</button><button id="devSkip">+час</button><button id="devWin">победа</button><button id="devClear">сброс события</button>
     <button class="devEv" data-ev="door_slow">дверь</button><button class="devEv" data-ev="short">тихий топот</button>
     <button class="devEv" data-ev="fast">быстрый</button><button class="devEv" data-ev="window">окно</button>
     <button class="devEv" data-ev="neighbor">сосед</button><button class="devEv" data-ev="bug">бабайка</button>
     <button id="devEsc">побег</button><button id="devMem">ночь 7</button>
     <button id="devCert">справка</button><button id="devInter">вставка</button>
-    <button id="devUnlock">открыть всё</button><button id="devSecret">изнанка</button><button id="devTrue">концовка</button>
+    <button id="devUnlock">открыть всё</button><button id="devSecret">изнанка</button><button id="devTales">истории</button><button id="devTrap">финал</button><button id="devIdeas">идеи</button><button id="devChron">хроника</button><button id="devCredits">титры★</button><button id="devTrue">концовка</button>
   </div>
 </div>
 <div id="hint">тяни мышью — повернуть голову</div>
-<div id="gallery"><div class="gcard">
-  <h2 id="galTitle">СЕКРЕТНАЯ ГАЛЕРЕЯ</h2>
-  <div class="gsub" id="galSub">ты досидел до них — теперь они твои</div>
-  <div id="galGrid"></div>
-  <div id="galSnd"></div>
-  <button id="galClose">ЗАКРЫТЬ</button>
-</div></div>
 <div id="inter"><div style="display:flex;flex-direction:column;align-items:center;"><canvas id="interPic" width="260" height="190"></canvas><div id="interText"></div></div></div>
 <div id="escBar"><div id="escFill"></div></div>
 <div id="cert"><div class="paper">
@@ -188,6 +210,39 @@
 </div></div>
 <div id="trueEnd"><canvas id="trueEndCv"></canvas><div id="trueEndText"></div></div>
 <div id="credits"><div id="creditsCol"></div></div>
+<div id="arch">
+  <div id="archTop"></div><div id="archBot"></div>
+  <div id="archStage"><div id="archCard">
+    <div id="archNum"></div>
+    <div id="archFrame"><canvas id="archCv" width="420" height="270"></canvas></div>
+    <div id="archTag"></div><div id="archTitle"></div><div id="archDesc"></div>
+    <button id="archPlay" style="display:none;">▶ ПРОСЛУШАТЬ</button>
+  </div></div>
+  <div id="archPrev" class="archArrow">‹</div><div id="archNext" class="archArrow">›</div>
+  <div id="archNav"></div>
+</div>
+<div id="chron" style="position:fixed;inset:0;z-index:64;display:none;">
+  <canvas id="chronCv" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></canvas>
+</div>
+<div id="chronAsk" style="position:fixed;inset:0;z-index:65;display:none;background:#04040a;flex-direction:column;align-items:center;justify-content:center;gap:26px;">
+  <div id="chronAskT" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(20px,3vw,30px);color:#d8d2c2;text-align:center;padding:0 8vw;line-height:1.7;"></div>
+  <div style="display:flex;gap:18px;flex-wrap:wrap;justify-content:center;">
+    <button id="chronYes" style="font-family:'Share Tech Mono';font-size:13px;letter-spacing:0.2em;padding:12px 34px;background:transparent;border:1px solid rgba(224,190,80,0.6);color:#e0be50;cursor:pointer;"></button>
+    <button id="chronNo" style="font-family:'Share Tech Mono';font-size:13px;letter-spacing:0.2em;padding:12px 34px;background:transparent;border:1px solid rgba(200,195,178,0.35);color:#8a8579;cursor:pointer;"></button>
+  </div>
+</div>
+<div id="tales" style="position:fixed;inset:0;z-index:62;display:none;background:#07070a;overflow:hidden;">
+  <canvas id="talesLamp" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
+  <div id="talesWrap" style="position:relative;z-index:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:4vh 6vw;">
+    <div style="display:flex;gap:26px;align-items:flex-end;">
+      <div style="text-align:center;"><canvas id="talePicBoy" width="150" height="185" style="background:#efe9d8;padding:8px 8px 26px;box-shadow:0 14px 44px rgba(0,0,0,0.8);transform:rotate(-3deg);"></canvas></div>
+      <div style="text-align:center;"><canvas id="talePicMon" width="150" height="185" style="background:#efe9d8;padding:8px 8px 26px;box-shadow:0 14px 44px rgba(0,0,0,0.8);transform:rotate(2.5deg);"></canvas></div>
+    </div>
+    <div id="taleName" style="font-family:'Share Tech Mono';font-size:12px;letter-spacing:0.25em;color:#8a8f96;"></div>
+    <div id="taleText" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(15px,2.1vw,21px);color:#cfc9ba;text-align:center;max-width:74ch;line-height:2.05;text-wrap:balance;opacity:0;transition:opacity 1s ease;"></div>
+    <div id="taleHint" style="position:absolute;bottom:4vh;font-family:'Share Tech Mono';font-size:11px;letter-spacing:0.2em;color:rgba(200,195,178,0.4);"></div>
+  </div>
+</div>
 <div id="galView"><canvas id="galViewCv"></canvas><div class="gvh">клик — закрыть</div></div>
 <div id="nightCard"><div id="nightCardText">ПЕРВАЯ НОЧЬ</div></div>
 <div class="lbox" id="lboxT"></div><div class="lbox" id="lboxB"></div>
@@ -212,6 +267,7 @@
 <div id="warn" style="position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;flex-direction:column;gap:24px;background:#000;text-align:center;padding:24px;">
   <div id="warnTitle" style="font-family:'Cormorant Garamond',serif;font-size:clamp(26px,6vw,44px);color:#c94444;letter-spacing:0.12em;">⚠ ПРЕДУПРЕЖДЕНИЕ</div>
   <div id="warnBody" style="max-width:46ch;color:#9a958a;font-size:13px;line-height:2.1;letter-spacing:0.04em;"></div>
+  <div id="warnTip" style="font-family:'Share Tech Mono';font-size:12px;letter-spacing:0.1em;color:#6a7078;line-height:2.1;border-top:1px solid rgba(200,195,178,0.12);border-bottom:1px solid rgba(200,195,178,0.12);padding:14px 0;max-width:44ch;"></div>
   <button id="warnBtn" style="font-family:'Share Tech Mono';font-size:14px;letter-spacing:0.25em;padding:14px 44px;border:1px solid #c94444;background:transparent;color:#c94444;cursor:pointer;transition:.3s;"></button>
 </div>
 
@@ -275,11 +331,11 @@
     <button id="btnN6" class="menuXtra mi">НОЧЬ 6: ПОБЕГ</button>
     <button id="btnN7" class="menuXtra mi" style="border-color:rgba(240,217,74,0.45);color:#f0d94a;">НОЧЬ 7: ???</button>
     <button id="btnCustom" class="menuXtra mi" style="border-color:rgba(127,223,255,0.45);color:#7fdfff;">СВОЯ НОЧЬ</button>
-    <button id="openGallery" class="mi" style="display:none;font-family:'Share Tech Mono';font-size:14px;letter-spacing:0.2em;padding:12px 26px;border:1px solid rgba(201,68,68,0.5);background:transparent;color:#c94444;cursor:pointer;">ГАЛЕРЕЯ</button>
+    <button id="btnArchive" class="menuXtra mi" style="border-color:rgba(240,217,74,0.5);color:#f0d94a;">АРХИВ</button>
     <div class="r mi" id="startBody" style="text-align:left;"></div>
   </div>
   <canvas id="menuFace"></canvas>
-  <div id="menuVer">v1.0 · dev-меню: клавиша `</div>
+  <div id="menuVer">v3.0</div>
 </div>
 
 <script src="js/data.js"></script>
