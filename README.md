@@ -2,7 +2,8 @@
 
 <p align="center">
   <em>Атмосферный 3D-хоррор в браузере · An atmospheric browser 3D horror</em><br>
-  <sub>Three.js · чистый JavaScript · без движка / pure JavaScript · no engine</sub>
+  <sub>Three.js · чистый JavaScript · без движка / pure JavaScript · no engine</sub><br>
+  <sub><b>v3.0</b></sub>
 </p>
 
 <p align="center">
@@ -24,11 +25,13 @@
 - Слушай, что происходит в темноте, и реагируй вовремя. Ошибёшься — скример.
 
 ### Что внутри
-- 5 сюжетных ночей с нарастающей сложностью и дневными вставками
+- 5 сюжетных ночей с нарастающей сложностью и вставками на рассвете
 - Ночь 6 — мини-игра
-- Ночь 7 — финал
-- Секретная ночь и две концовки
-- «Своя ночь» с настройкой монстров, награда за прохождение
+- Ночь 7 — финал и истории тех, кто здесь остался
+- Хроника: несколько сцен от первого лица о том, что случилось той ночью
+- Секретная ночь и несколько концовок
+- «Своя ночь» с настройкой монстров, скрытые коды, награды за прохождение
+- Архив со скримерами, звуками и вырезанными идеями — открывается за полное прохождение
 - Локализация (RU / EN) и множество скрытых пасхалок
 
 ### Играть
@@ -61,12 +64,16 @@ The game is written in pure JavaScript with Three.js; all visuals and most sound
 - Listen to what moves in the dark and react in time. Slip up — a jumpscare.
 
 ### Features
-- 5 story nights with rising difficulty and daytime interludes
+- 5 story nights with rising difficulty and interludes at dawn
 - Night 6 — a mini-game
-- Night 7 — the finale
-- A secret night and two endings
-- A "Custom Night" with adjustable monsters, and a reward for finishing
+- Night 7 — the finale and the stories of those who stayed
+- A chronicle: several first-person scenes about what happened that night
+- A secret night and several endings
+- A "Custom Night" with adjustable monsters, hidden codes and rewards
+- An archive of scares, sounds and cut ideas — unlocked by full completion
 - Localization (RU / EN) and many hidden easter eggs
+
+> The intro is voiced in Russian; the English version plays it with subtitles.
 
 ### Play
 🎮 **[Play in your browser](https://romantvl.github.io/five-nights-at-lastochka/lastochka/)** — no download required.
@@ -87,12 +94,11 @@ lastochka/
 
 ## Команда · Team
 
-- **Роман** — легенда лагеря «Ласточка» / legend of camp Swallow
-- **Илья** · spugage — ИКГ / ICG
+- **Роман** — создатель, программист и в целом легенда / creator, programmer and all-round legend
+- **Ильдар** · Ilyrc — идея, придуманная в самом лагере / the idea born at the camp itself
 - **Богдан** · oboyudnenk1y
-- **Ильдар** · Ilyrc
 
-<sub>Музыка / Music: C418 — krank</sub>
+<sub>Музыка / Music: C418 — krank · Ridiculon — Acceptance (из / from The Binding of Isaac)</sub>
 
 ---
 
